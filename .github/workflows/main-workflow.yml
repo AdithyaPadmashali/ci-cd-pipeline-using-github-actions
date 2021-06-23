@@ -6,26 +6,15 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ main,heroku ]
   pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    branches: [ main,heroku ]
 jobs:
-  # This workflow contains a single job called "build"
-  docker:
-    # The type of runner that the job will run on
+  build:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Login to Heroku
-      - uses: actions/checkout@v2      
-      - uses: CDNievas/heroku-action@v1.0 
+      - uses: actions/checkout@v2
+      - uses: CDNievas/heroku-action@v1.0 # This is the action
         with:
           heroku_email: "adithya.p2001@gmail.com"
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
