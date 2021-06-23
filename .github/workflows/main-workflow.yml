@@ -38,4 +38,4 @@ jobs:
           email: "adithya.p2001@gmail.com" # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           app_name: "salty-spire-27676" # you aplication name
-          dockerfile_path: '/app/Dockerfile' # set the path to the folder wher the Dokerfile is located
+          dockerfile_path: '' # set the path to the folder wher the Dokerfile is located
