@@ -1,21 +1,41 @@
-# This is a basic workflow to help you get started with Actions
+# # This is a basic workflow to help you get started with Actions
 
-name: CI
+# name: CI
 
-# Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+# # Controls when the action will run. 
+# on:
+#   # Triggers the workflow on push or pull request events but only for the main branch
+#   push:
+#     branches: [ main,heroku ]
+#   pull_request:
+#     branches: [ main,heroku ]
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: CDNievas/heroku-action@v1.0 # This is the action
+#         with:
+#           heroku_email: "adithya.p2001@gmail.com"
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_app_name: "salty-spire-27676"
+name: 'CI' #set whatevername you want to your github job
+on: 
   push:
-    branches: [ main,heroku ]
+     branches: [ main,heroku ]
   pull_request:
-    branches: [ main,heroku ]
+     branches: [ main,heroku ] # set the events you would like to trigger this job
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: CDNievas/heroku-action@v1.0 # This is the action
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
+        id: heroku
+        uses: cloutojp/heroku-deploy@v1.0.0  # use the latest version of the action
         with:
-          heroku_email: "adithya.p2001@gmail.com"
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "salty-spire-27676"
+          email: "adithya.p2001@gmail.com" # your heroku email
+          api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
+          app_name: "salty-spire-27676" # you aplication name
+          dockerfile_path: '.' # set the path to the folder wher the Dokerfile is located
