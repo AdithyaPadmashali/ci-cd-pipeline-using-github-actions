@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main,heroku, schedule ]
+    branches: [ main,heroku, scheduler ]
   pull_request:
-    branches: [ main,heroku, schedule ]
+    branches: [ main,heroku, scheduler ]
   schedule:
     - cron:  '*/3 * * * *'
 jobs:
