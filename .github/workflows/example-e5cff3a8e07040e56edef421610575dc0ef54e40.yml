@@ -1,0 +1,27 @@
+name: example-cron-action
+'on':
+  schedule:
+    - cron: '*/6 * * * *'
+jobs:
+  singleJobName:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 12.x
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: '${{ env.DELAYED_JOB_CHECKOUT_REF }}'
+      - name: Do some work
+        run: echo $GITHUB_SHA
+      - name: Remove scheduled job
+        uses: cardinalby/unschedule-job-action@v1
+        if: github.run_number > 10
+        with:
+          ghToken: '${{ secrets.WORKFLOWS_TOKEN }}'
+    env:
+      DELAYED_JOB_CHECKOUT_REF: e5cff3a8e07040e56edef421610575dc0ef54e40
+      DELAYED_JOB_CHECKOUT_REF_IS_TAG: 'false'
+      DELAYED_JOB_WORKFLOW_FILE_PATH: .github/workflows/example-e5cff3a8e07040e56edef421610575dc0ef54e40.yml
+      DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH: master
