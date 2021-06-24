@@ -6,18 +6,27 @@ on:
     branches: [ main,heroku,naren ]
   schedule:
     - cron: "*/6 * * * *"
+# jobs:
+#   reminder:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: gr2m/set-cron-schedule-action@v2
+#         with:
+#           token: ${{ secrets.WORKFLOWS_TOKEN }}
+#           cron: |
+#             0 10 * * 2
+#             0 15 * * 4
+#           # optional: set workflow id or file name
+#           workflow: .github/workflows/main-workflow.yml
+#           # optional: Defaults to "ci($WORKFLOW_NAME): update cron schedule: $CRON_EXPRESSIONS".
+#           #           $WORKFLOW_NAME and $CRON_EXPRESSIONS will be replaced.
+#           message: "update cron for next reminder to do the thing"
 jobs:
-  reminder:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: gr2m/set-cron-schedule-action@v2
+      - name: schedule
+      - uses: cardinalby/schedule-job-action@v1
         with:
-          token: ${{ secrets.WORKFLOWS_TOKEN }}
-          cron: |
-            0 10 * * 2
-            0 15 * * 4
-          # optional: set workflow id or file name
-          workflow: .github/workflows/main-workflow.yml
-          # optional: Defaults to "ci($WORKFLOW_NAME): update cron schedule: $CRON_EXPRESSIONS".
-          #           $WORKFLOW_NAME and $CRON_EXPRESSIONS will be replaced.
-          message: "update cron for next reminder to do the thing"
+          ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
+          templateYmlFile: '.github/workflows/main-workflow.yml'
