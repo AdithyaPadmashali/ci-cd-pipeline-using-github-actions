@@ -4,11 +4,11 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main,heroku ]
-  pull_request:
-    branches: [ main,heroku ]
+#   # Triggers the workflow on push or pull request events but only for the main branch
+#   push:
+#     branches: [ main,heroku ]
+#   pull_request:
+#     branches: [ main,heroku ]
   schedule:
     - cron:  '*/3 * * * *'
 jobs:
@@ -70,3 +70,8 @@ jobs:
         with:
           push: true
           tags: adithya1/nodeapp:latest
+      - name: Remove scheduled job after 10 attempts
+        uses: cardinalby/unschedule-job-action@v1
+        if: github.run_number > 10
+        with:
+            ghToken: ${{ secrets.WORKFLOWS_TOKEN }} 
