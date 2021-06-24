@@ -1,17 +1,20 @@
-name: Schedule
-
-# Controls when the action will run. 
-on: # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main,heroku ]
-  pull_request:
-    branches: [ main,heroku ]
+name: Reminder
+on:
+  schedule:
+    - cron: "*/6 * * * *"
 jobs:
-  build:
+  reminder:
     runs-on: ubuntu-latest
     steps:
-      - name: schedule
-      - uses: cardinalby/schedule-job-action@v1
+      - run: do-the-thing.sh
+      - uses: gr2m/set-cron-schedule-action@v2
         with:
-          ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
-          templateYmlFile: '.github/workflows/main-workflow.yml'
+          token: ${{ secrets.WORKFLOWS_TOKEN }}
+          cron: |
+            0 10 * * 2
+            0 15 * * 4
+          # optional: set workflow id or file name
+          workflow: .github/workflows/main-workflow.yml
+          # optional: Defaults to "ci($WORKFLOW_NAME): update cron schedule: $CRON_EXPRESSIONS".
+          #           $WORKFLOW_NAME and $CRON_EXPRESSIONS will be replaced.
+          message: "update cron for next reminder to do the thing"
