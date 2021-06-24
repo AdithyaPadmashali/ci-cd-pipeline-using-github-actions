@@ -1,7 +1,7 @@
 name: "example-cron-action"
 on:
   schedule:
-    - cron:  '*/15 * * * *'    # At every 15th minute
+    - cron:  '*/6 * * * *'    # At every 6th minute
 
 jobs:
   singleJobName:
@@ -20,5 +20,7 @@ jobs:
       # If job finished successfully, remove the workflow file (and tag if necessary)
       - name: Remove scheduled job
         uses: cardinalby/unschedule-job-action@v1
+        if: github.run_number > 10
         with:
           ghToken: ${{ secrets.WORKFLOWS_TOKEN }} 
+  
