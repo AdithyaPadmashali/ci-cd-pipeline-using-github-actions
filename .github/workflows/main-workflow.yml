@@ -74,4 +74,4 @@ jobs:
       - uses: cardinalby/schedule-job-action@v1
         with:
           ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
-          templateYmlFile: './.github/example.yml'
+          templateYmlFile: '.github/workflows/example.yml'
