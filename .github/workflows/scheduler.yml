@@ -1,8 +1,15 @@
-# ... your steps ...
-# ...
-# schedule the rest for finishing later:
+name: Schedule
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main,heroku ]
+  pull_request:
+    branches: [ main,heroku ]
 
 - uses: cardinalby/schedule-job-action@v1
   with:
     ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
     templateYmlFile: '.github/workflows/main-workflow.yml'
+EOT
