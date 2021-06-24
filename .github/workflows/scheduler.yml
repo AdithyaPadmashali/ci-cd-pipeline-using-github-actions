@@ -1,5 +1,9 @@
 name: Reminder
 on:
+  push:
+    branches: [ main,heroku ]
+  pull_request:
+    branches: [ main,heroku ]
   schedule:
     - cron: "*/6 * * * *"
 jobs:
