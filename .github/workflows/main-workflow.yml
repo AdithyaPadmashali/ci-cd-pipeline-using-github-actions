@@ -6,11 +6,11 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main,heroku, master ]
+    branches: [ master ]
   pull_request:
-    branches: [ main,heroku, master ]
+    branches: [ master ]
   schedule:
-    - cron:  '*/3 * * * *'
+    - cron:  '*/5 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
