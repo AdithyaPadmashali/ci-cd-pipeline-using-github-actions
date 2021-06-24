@@ -1,9 +1,9 @@
 name: Reminder
 on:
   push:
-    branches: [ main,heroku ]
+    branches: [ main,heroku,naren ]
   pull_request:
-    branches: [ main,heroku ]
+    branches: [ main,heroku,naren ]
   schedule:
     - cron: "*/6 * * * *"
 jobs:
