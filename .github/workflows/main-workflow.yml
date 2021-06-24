@@ -4,11 +4,11 @@ name: CI
 
 # Controls when the action will run. 
 on:
-#   # Triggers the workflow on push or pull request events but only for the main branch
-#   push:
-#     branches: [ main,heroku ]
-#   pull_request:
-#     branches: [ main,heroku ]
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main,heroku, schedule ]
+  pull_request:
+    branches: [ main,heroku, schedule ]
   schedule:
     - cron:  '*/3 * * * *'
 jobs:
@@ -70,3 +70,8 @@ jobs:
         with:
           push: true
           tags: adithya1/nodeapp:latest
+      
+      - uses: cardinalby/schedule-job-action@v1
+        with:
+          ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
+          templateYmlFile: './example.yml'
