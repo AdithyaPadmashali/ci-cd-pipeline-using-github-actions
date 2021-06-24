@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: [ heroku ]
   schedule:
-    - cron:  '*/11 * * * *'
+    - cron:  '1 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
