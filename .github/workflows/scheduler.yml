@@ -6,7 +6,6 @@ jobs:
   reminder:
     runs-on: ubuntu-latest
     steps:
-      - run: do-the-thing.sh
       - uses: gr2m/set-cron-schedule-action@v2
         with:
           token: ${{ secrets.WORKFLOWS_TOKEN }}
