@@ -25,7 +25,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: do-the-thing.sh
       - name: schedule
       - uses: cardinalby/schedule-job-action@v1
         with:
