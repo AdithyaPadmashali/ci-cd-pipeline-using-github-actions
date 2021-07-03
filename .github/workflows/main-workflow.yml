@@ -72,5 +72,5 @@ jobs:
 #           tags: adithya1/nodeapp:latest
       
       - name: automating DNS record creation
-        run: heroku domains:add test5.ccbd-turbo.me
+        run: heroku domains:add test5.ccbd-turbo.me -a ccbd-turbo
         
