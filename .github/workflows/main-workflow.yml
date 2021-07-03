@@ -20,43 +20,61 @@ jobs:
         uses: actions/checkout@v2
 
 
-### ⬇ IMPORTANT PART ⬇ ###
+## ⬇ IMPORTANT PART ⬇ ###
 
-#       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
-#         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
-#         with:
-#           # Below you must provide variables for your Heroku app.
+      - name: heroku login
+        run: |
+          cat > ~/.netrc <<EOF
+            machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+            machine git.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+          EOF
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
-#           # The email address associated with your Heroku account.
-#           # If you don't want to use repository secrets (which is recommended) you can do:
-#           # email: my.email@example.com
-#           email: "adithya.p2001@gmail.com"
+      - name: create new heroku app
+        run: |
+          heroku apps:create newapp
+
+      - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
+        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+        with:
+          # Below you must provide variables for your Heroku app.
+
+          # The email address associated with your Heroku account.
+          # If you don't want to use repository secrets (which is recommended) you can do:
+          # email: my.email@example.com
+          email: "adithya.p2001@gmail.com"
           
-#           # Heroku API key associated with provided user's email.
-#           # Api Key is available under your Heroku account settings.
-#           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          # Heroku API key associated with provided user's email.
+          # Api Key is available under your Heroku account settings.
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
-#           # Name of the heroku application to which the build is to be sent.
-#           heroku_app_name: "ccbd-turbo"
+          # Name of the heroku application to which the build is to be sent.
+          heroku_app_name: "newapp"
 
-#           # (Optional, default: "./")
-#           # Dockerfile directory.
-#           # For example, if you have a Dockerfile in the root of your project, leave it as follows:
-#           dockerfile_directory: ./
+          # (Optional, default: "./")
+          # Dockerfile directory.
+          # For example, if you have a Dockerfile in the root of your project, leave it as follows:
+          dockerfile_directory: ./
 
-#           # (Optional, default: "Dockerfile")
-#           # Dockerfile name.
-#           dockerfile_name: Dockerfile
+          # (Optional, default: "Dockerfile")
+          # Dockerfile name.
+          dockerfile_name: Dockerfile
 
-#           # (Optional, default: "")
-#           # Additional options of docker build command.
-#           docker_options: "--no-cache"
+          # (Optional, default: "")
+          # Additional options of docker build command.
+          docker_options: "--no-cache"
 
-#           # (Optional, default: "web")
-#           # Select the process type for which you want the docker container to be uploaded.
-#           # By default, this argument is set to "web".
-#           # For more information look at https://devcenter.heroku.com/articles/process-model
-#           process_type: web
+          # (Optional, default: "web")
+          # Select the process type for which you want the docker container to be uploaded.
+          # By default, this argument is set to "web".
+          # For more information look at https://devcenter.heroku.com/articles/process-model
+          process_type: web
 #       - name: Login to DockerHub
 #         uses: docker/login-action@v1 
 #         with:
@@ -70,23 +88,10 @@ jobs:
 #         with:
 #           push: true
 #           tags: adithya1/nodeapp:latest
-      
-      - name: automating DNS record creation
-        run: |
-          cat > ~/.netrc <<EOF
-            machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-            machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-          EOF
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+    
           
       - name: add heroku domain
-        run: heroku domains:add test8.ccbd-turbo.me -a ccbd-turbo
+        run: heroku domains:add newapp.ccbd-turbo.me -a newapp
         
       - name: adding domain to cloudflare
         run: |
