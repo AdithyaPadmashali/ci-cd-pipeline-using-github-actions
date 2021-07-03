@@ -33,12 +33,12 @@ jobs:
               password $HEROKU_API_KEY
           EOF
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY_1 }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
       - name: create new heroku app
         run: |
-          heroku apps:create bc-001-020-028
+          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create bc-001-020-028
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
@@ -52,7 +52,7 @@ jobs:
           
           # Heroku API key associated with provided user's email.
           # Api Key is available under your Heroku account settings.
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY_1 }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
           # Name of the heroku application to which the build is to be sent.
           heroku_app_name: "bc-001-020-028"
@@ -91,7 +91,7 @@ jobs:
     
           
       - name: add heroku domain
-        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY_1}} heroku domains:add newapp.ccbd-turbo.me -a bc-001-020-028
+        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add newapp.ccbd-turbo.me -a bc-001-020-028
         
       - name: adding domain to cloudflare
         run: |
