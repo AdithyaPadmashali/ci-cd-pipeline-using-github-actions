@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
   # Triggers the workflow on push or pull request events but only for the main branch.
   push:
-    branches: [ cloudflare ]
+    branches: [ adi ]
   pull_request:
-    branches: [ cloudflare ]
+    branches: [ adi ]
 
 jobs:
   build:
@@ -38,7 +38,7 @@ jobs:
 
       - name: create new heroku app
         run: |
-          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create abhishek-new
+          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create adi-test-new
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
@@ -55,7 +55,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
           # Name of the heroku application to which the build is to be sent.
-          heroku_app_name: "abhishek-new"
+          heroku_app_name: "adi-test-new"
 
           # (Optional, default: "./")
           # Dockerfile directory.
@@ -91,9 +91,9 @@ jobs:
     
           
       - name: add heroku domain
-        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add abhi.ccbd-turbo.me -a abhishek-new
+        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add aditest.ccbd-turbo.me -a adi-test-new
         
       - name: adding domain to cloudflare
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/940698b5ca39dee14b89e66f9d08a5d5/dns_records" -H "Authorization: Bearer -uA0RUH_KYq-qFuBGZd5yiJlEXnMKb7K3jubxPc9" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"abhi","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/940698b5ca39dee14b89e66f9d08a5d5/dns_records" -H "Authorization: Bearer -uA0RUH_KYq-qFuBGZd5yiJlEXnMKb7K3jubxPc9" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"aditest","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
         
