@@ -38,7 +38,7 @@ jobs:
 
       - name: create new heroku app
         run: |
-          heroku apps:create newapp
+          heroku apps:create newApp
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
@@ -55,7 +55,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
           # Name of the heroku application to which the build is to be sent.
-          heroku_app_name: "newapp"
+          heroku_app_name: "newApp"
 
           # (Optional, default: "./")
           # Dockerfile directory.
