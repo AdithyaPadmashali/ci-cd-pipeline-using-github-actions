@@ -37,7 +37,12 @@ jobs:
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
           
       - name: list heroku apps
-        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps | awk 'adi-test-new' && echo Found
+        run:  echo "::set-output name=foundornot::$(HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps | awk 'adi-test-new' && echo Found)"
+        id: check_if_present
+        
+      - name: check if present
+        run: echo ${{check_if_present.outputs.foundornot}}
+      
 
 #       - name: create new heroku app
 #         run: |
