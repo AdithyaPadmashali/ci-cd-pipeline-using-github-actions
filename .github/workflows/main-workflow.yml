@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ cloudflare ]
+    branches: [ production ]
   pull_request:
-    branches: [ cloudflare ]
+    branches: [ production ]
 
 jobs:
   build:
