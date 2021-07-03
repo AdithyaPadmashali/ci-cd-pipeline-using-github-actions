@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-           <code>WELCOME TO CCBD... <br>You're looking at aditest subdomain</br></code>
+           <code>WELCOME TO CCBD... testing</code>
         </p>
         <a
           className="App-link"
