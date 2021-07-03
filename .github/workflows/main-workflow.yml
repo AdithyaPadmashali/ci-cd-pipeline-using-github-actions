@@ -91,7 +91,7 @@ jobs:
     
           
       - name: add heroku domain
-        run: HEROKU_API_KEY='-uA0RUH_KYq-qFuBGZd5yiJlEXnMKb7K3jubxPc9' heroku domains:add newapp.ccbd-turbo.me -a bc-001-020-028
+        run: HEROKU_API_KEY='a5120bc3-816a-4b12-8a29-b8d38a5e0084' heroku domains:add newapp.ccbd-turbo.me -a bc-001-020-028
         
       - name: adding domain to cloudflare
         run: |
