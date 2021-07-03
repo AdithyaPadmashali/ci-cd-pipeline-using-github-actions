@@ -41,7 +41,7 @@ jobs:
         id: check_if_present
         
       - name: check if present
-        run: echo ${{check_if_present.outputs.foundornot}}
+        run: echo ${{steps.check_if_present.outputs.foundornot}}
       
 
 #       - name: create new heroku app
