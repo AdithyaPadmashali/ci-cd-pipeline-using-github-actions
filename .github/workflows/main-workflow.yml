@@ -95,5 +95,5 @@ jobs:
         
       - name: adding domain to cloudflare
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer 04cdeab09dddb9dc3d608e2065985ddabe33e" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"naren","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer 667bf58701aef7f24afcc57daf544457" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"naren","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
         
