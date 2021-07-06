@@ -38,7 +38,7 @@ jobs:
 
       - name: create new heroku app
         run: |
-          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create abhishek-new
+          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create naren-new
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
@@ -55,7 +55,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
           # Name of the heroku application to which the build is to be sent.
-          heroku_app_name: "abhishek-new"
+          heroku_app_name: "naren-new"
 
           # (Optional, default: "./")
           # Dockerfile directory.
@@ -91,9 +91,9 @@ jobs:
     
           
       - name: add heroku domain
-        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add abhi.ccbd-turbo.me -a abhishek-new
+        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add naren.ccbd-turbo.me -a naren-new
         
       - name: adding domain to cloudflare
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{secrets.CLOUDFLARE_AUTH_KEY}}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"abhi","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{secrets.CLOUDFLARE_AUTH_KEY}}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"naren","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
         
