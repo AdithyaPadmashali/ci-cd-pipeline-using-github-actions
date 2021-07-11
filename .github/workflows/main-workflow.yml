@@ -31,14 +31,26 @@ jobs:
       - name: Echo input-parameters.json
         run: echo "${{ steps.inputparams.outputs.content }}" 
         
-      - name: get Subdomain
+      - name: get Email from input
+        id: email
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: 'input-parameters.json'
+            prop_path: 'email'
+      - name: get app name from input
+        id: appName
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: 'input-parameters.json'
+            prop_path: 'app_name'
+      - name: get subdomain from input
         id: subdomain
         uses: notiz-dev/github-action-json-property@release
         with: 
             path: 'input-parameters.json'
             prop_path: 'subdomain_name'
             
-      - run: echo ${{steps.subdomain.outputs.prop}}
+      - run: echo "${{steps.email.outputs.prop}} ${{steps.app_name.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
 
       - name: heroku login
         run: |
