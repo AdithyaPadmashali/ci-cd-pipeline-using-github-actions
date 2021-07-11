@@ -32,7 +32,11 @@ jobs:
         run: echo "${{ steps.inputparams.outputs.content }}" 
         
       - name: try to extract json values
-        run: jq .email input-parameters.json
+        uses: edwardgeorge/jq-action@main
+        with:
+          input: "${{ steps.inputparams.outputs.content }}"
+          script: ".email"
+          #"[.[] | select(.num == 1) | .num]"
 
       - name: heroku login
         run: |
