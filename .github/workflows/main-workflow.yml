@@ -41,6 +41,7 @@ jobs:
 
       - name: Get the App Name from Input Parameters file
         id: getAppName
+        run: echo "::set-output name=content::value"
         uses: edwardgeorge/jq-action@main
         with:
           input: "${{ steps.inputparams.outputs.content }}"
@@ -54,7 +55,7 @@ jobs:
           script: ".subdomain_name"
           
       - name: test the outputs
-        run: echo "${{ steps.getAppName.outputs }} ${{ steps.getSubdomainName.outputs.content }}"
+        run: echo "${{ steps.getAppName.outputs.content }} ${{ steps.getSubdomainName.outputs.content }}"
 
       - name: heroku login
         run: |
