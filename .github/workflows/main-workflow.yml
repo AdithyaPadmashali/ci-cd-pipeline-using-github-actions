@@ -36,7 +36,7 @@ jobs:
         with:
           input: "${{ steps.inputparams.outputs.content }}"
           script: ".email"
-          #"[.[] | select(.num == 1) | .num]"
+          ##"[.[] | select(.num == 1) | .num]"
 
       - name: heroku login
         run: |
