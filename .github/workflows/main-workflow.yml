@@ -31,31 +31,14 @@ jobs:
       - name: Echo input-parameters.json
         run: echo "${{ steps.inputparams.outputs.content }}" 
         
-      - name: Get the Email from Input Parameters file
-        id: getEmail
-        uses: edwardgeorge/jq-action@main
-        with:
-          input: "${{ steps.inputparams.outputs.content }}"
-          script: ".email"
-          ##"[.[] | select(.num == 1) | .num]" 
-
-      - name: Get the App Name from Input Parameters file
-        id: getAppName
-        run: echo "::set-output name=content::value"
-        uses: edwardgeorge/jq-action@main
-        with:
-          input: "${{ steps.inputparams.outputs.content }}"
-          script: ".app_name"
-          
-      - name: Get the subdomain name from Input Parameters file
-        id: getSubdomainName
-        uses: edwardgeorge/jq-action@main
-        with:
-          input: "${{ steps.inputparams.outputs.content }}"
-          script: ".subdomain_name"
-          
-      - name: test the outputs
-        run: echo "${{ steps.getAppName.outputs.content }} ${{ steps.getSubdomainName.outputs.content }}"
+      - name: get Subdomain
+        id: subdomain
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+            path: 'input-parameters.json'
+            prop_path: 'subdomain_name'
+            
+      - run: echo ${{steps.subdomain.outputs.subdomain_name}}
 
       - name: heroku login
         run: |
