@@ -35,7 +35,7 @@ jobs:
         uses: edwardgeorge/jq-action@main
         with:
           input: "${{ steps.inputparams.outputs.content }}"
-          script: ".email"
+          script: ".app_name"
           ##"[.[] | select(.num == 1) | .num]"
 
       - name: heroku login
