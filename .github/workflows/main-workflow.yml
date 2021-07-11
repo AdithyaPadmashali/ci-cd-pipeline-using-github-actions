@@ -54,7 +54,7 @@ jobs:
           script: ".subdomain_name"
           
       - name: test the outputs
-        run: echo "${{ steps.getEmail.outputs.content }} ${{ steps.getAppName.outputs.content }} ${{ steps.getSubdomainName.outputs.content }}"
+        run: echo "${{ steps.getAppName.outputs }} ${{ steps.getSubdomainName.outputs.content }}"
 
       - name: heroku login
         run: |
