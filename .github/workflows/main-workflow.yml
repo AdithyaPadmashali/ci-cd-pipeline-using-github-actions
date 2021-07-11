@@ -50,7 +50,7 @@ jobs:
             path: 'input-parameters.json'
             prop_path: 'subdomain_name'
             
-      - run: echo "${{steps.email.outputs.prop}} ${{steps.app_name.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
+      - run: echo "${{steps.email.outputs.prop}} ${{steps.appName.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
 
       - name: heroku login
         run: |
