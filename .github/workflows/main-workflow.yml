@@ -28,7 +28,7 @@ jobs:
         with:
           path: ./input-parameters.json
       - name: Echo input-parameters.json
-        run: echo "${{ steps.inputparams.outputs.content }}" 
+        run: echo "${{ steps.inputparams.outputs.content['app name'] }}" 
 
       - name: heroku login
         run: |
