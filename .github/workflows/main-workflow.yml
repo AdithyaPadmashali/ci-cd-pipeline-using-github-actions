@@ -27,8 +27,12 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: ./input-parameters.json
+          
       - name: Echo input-parameters.json
-        run: echo "${{ steps.inputparams.outputs.content['app name'] }}" 
+        run: echo "${{ steps.inputparams.outputs.content }}" 
+        
+      - name: try to extract json values
+        run: jq .email input-parameters.json
 
       - name: heroku login
         run: |
