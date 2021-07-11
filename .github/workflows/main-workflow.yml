@@ -22,6 +22,14 @@ jobs:
 
 ## ⬇ IMPORTANT PART ⬇ ###
 
+      - name: Read input-parameters.json
+        id: inputparams
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./input-parameters.json
+      - name: Echo input-parameters.json
+        run: echo "${{ steps.inputparams.outputs.content }}"
+
       - name: heroku login
         run: |
           cat > ~/.netrc <<EOF
