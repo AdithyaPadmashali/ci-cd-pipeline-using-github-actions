@@ -53,7 +53,7 @@ jobs:
 #       #reference for the usage of the inputs onbtained from the json file
 #       - run: echo "${{steps.email.outputs.prop}} ${{steps.appName.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
 
-      - name: heroku login
+#       - name: heroku login
 #         run: |
 #           cat > ~/.netrc <<EOF
 #             machine api.heroku.com
