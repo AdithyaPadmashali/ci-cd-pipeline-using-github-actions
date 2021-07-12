@@ -25,7 +25,8 @@ FROM node:lts
 
 # First of all, only copy package.json
 # along with its lockfile into /code.
-COPY package.json package-lock.json /code/
+COPY package.json /code/
+COPY package-lock.json  /code/
 
 # Download all dependencies listed
 # in package.json.
