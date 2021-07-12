@@ -25,6 +25,7 @@ FROM node:lts
 
 # First of all, only copy package.json
 # along with its lockfile into /code.
+WORKDIR /code
 COPY package.json /code/
 COPY package-lock.json  /code/
 
