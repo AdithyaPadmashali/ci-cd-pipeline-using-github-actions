@@ -90,7 +90,7 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           
           # Name of the heroku application to which the build is to be sent.
-          heroku_app_name: "naren-new"
+          heroku_app_name: "${{steps.appName.outputs.prop}}"
 
           # (Optional, default: "./")
           # Dockerfile directory.
