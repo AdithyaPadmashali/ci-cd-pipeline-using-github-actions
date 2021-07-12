@@ -50,32 +50,15 @@ jobs:
             path: 'input-parameters.json'
             prop_path: 'subdomain_name'
             
-#       #reference for the usage of the inputs onbtained from the json file
-#       - run: echo "${{steps.email.outputs.prop}} ${{steps.appName.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
-
-#       - name: heroku login
-#         run: |
-#           cat > ~/.netrc <<EOF
-#             machine api.heroku.com
-#               login $HEROKU_EMAIL
-#               password $HEROKU_API_KEY
-#             machine git.heroku.com
-#               login $HEROKU_EMAIL
-#               password $HEROKU_API_KEY
-#           EOF
-#         env:
-#           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-#           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-
       - name: create new heroku app
         run: |
           HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create ${{steps.appName.outputs.prop}}
         
-#       - uses: whoan/docker-build-with-cache-action@v5
-#         with:
-#           username: ${{ secrets.DOCKER_USERNAME }}
-#           password: "${{ secrets.DOCKER_PASSWORD }}"
-#           image_name: nodeapp
+      - uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: "${{ secrets.DOCKER_PASSWORD }}"
+          image_name: nodeapp
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
         with:
@@ -118,12 +101,12 @@ jobs:
 #           password: ${{ secrets.DOCKER_PASSWORD }}
 
       # Runs a set of commands using the runners  shell
-#       - name: Build and push
-#         id: docker_build
-#         uses: docker/build-push-action@v2
-#         with:
-#           push: true
-#           tags: adithya1/nodeapp:latest
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: adithya1/nodeapp:latest
     
           
       - name: add heroku domain
