@@ -29,7 +29,7 @@ jobs:
           path: ./input-parameters.json
           
       - name: Echo input-parameters.json
-        run: echo "${{ steps.inputparams.content['app name'] }}" 
+        run: echo "${{ steps.inputparams.output.content}}" 
         
       - name: get Email from input
         id: email
@@ -69,7 +69,7 @@ jobs:
 
       - name: create new heroku app
         run: |
-          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create naren-new
+          HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku apps:create ${{steps.appName.outputs.prop}}
         
       - uses: satackey/action-docker-layer-caching@v0.0.11
         # Ignore the failure of a step and avoid terminating the job.
@@ -83,7 +83,7 @@ jobs:
           # The email address associated with your Heroku account.
           # If you don't want to use repository secrets (which is recommended) you can do:
           # email: my.email@example.com
-          email: "narendirenroxx@gmail.com"
+          email: "${{steps.email.outputs.prop}}"
           
           # Heroku API key associated with provided user's email.
           # Api Key is available under your Heroku account settings.
@@ -126,8 +126,8 @@ jobs:
     
           
       - name: add heroku domain
-        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add naren.ccbd-turbo.me -a naren-new
+        run: HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} heroku domains:add ${{steps.subdomain.outputs.prop}}.ccbd-turbo.me -a ${{steps.appName.outputs.prop}}
        
       - name: adding domain to cloudflare
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_AUTH_KEY_1 }}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"naren","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_AUTH_KEY_1 }}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"${{steps.subdomain.outputs.prop}}","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
