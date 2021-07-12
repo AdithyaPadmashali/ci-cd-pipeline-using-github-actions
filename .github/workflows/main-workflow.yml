@@ -50,22 +50,22 @@ jobs:
             path: 'input-parameters.json'
             prop_path: 'subdomain_name'
             
-      #reference for the usage of the inputs onbtained from the json file
-      - run: echo "${{steps.email.outputs.prop}} ${{steps.appName.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
+#       #reference for the usage of the inputs onbtained from the json file
+#       - run: echo "${{steps.email.outputs.prop}} ${{steps.appName.outputs.prop}} ${{steps.subdomain.outputs.prop}}" 
 
       - name: heroku login
-        run: |
-          cat > ~/.netrc <<EOF
-            machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-            machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_KEY
-          EOF
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+#         run: |
+#           cat > ~/.netrc <<EOF
+#             machine api.heroku.com
+#               login $HEROKU_EMAIL
+#               password $HEROKU_API_KEY
+#             machine git.heroku.com
+#               login $HEROKU_EMAIL
+#               password $HEROKU_API_KEY
+#           EOF
+#         env:
+#           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
       - name: create new heroku app
         run: |
