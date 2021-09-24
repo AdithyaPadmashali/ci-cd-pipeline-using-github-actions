@@ -54,9 +54,9 @@ jobs:
       - name: Build and publish image to GCR
         uses: carbonchain/action-container-registry@v1.1
         with:
-            project_id: [your-project]
-            dockerfile: [path-to-your-dockerfile]
-            image: gcr.io/[your-project]/[image-name]
+            project_id: ccbd-318506
+            # dockerfile: [path-to-your-dockerfile]
+            image: gcr.io/ccbd-318506/nodeapp
             service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       - name: adding domain to cloudflare
