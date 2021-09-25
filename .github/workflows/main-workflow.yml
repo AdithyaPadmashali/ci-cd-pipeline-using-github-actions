@@ -51,22 +51,22 @@ jobs:
             prop_path: 'subdomain_name'
             
   
-      # - name: Build and publish image to GCR
-      #   uses: carbonchain/action-container-registry@v1.1
-      #   with:
-      #       project_id: ccbd-318506
-      #       dockerfile: ../Dockerfile
-      #       image: gcr.io/ccbd-318506/nodeapp
-      #       service_account_key: ${{ secrets.GCP_SA_KEY }}
-
-      - name: Build Docker Image
-        uses: FlowSquad/docker-cloud-build@v1.0.1
+      - name: Build and publish image to GCR
+        uses: carbonchain/action-container-registry@v1.1
         with:
-            gcp-project-id: ccbd-318506
-            gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
-            image-name: nodeapp
-            image-sources: /Dockerfile
-            github-token: ${{ secrets.WORKFLOWS_TOKEN }}
+            project_id: ccbd-318506
+            dockerfile: /Dockerfile
+            image: gcr.io/ccbd-318506/nodeapp
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+      # - name: Build Docker Image
+      #   uses: FlowSquad/docker-cloud-build@v1.0.1
+      #   with:
+      #       gcp-project-id: ccbd-318506
+      #       gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
+      #       image-name: nodeapp
+      #       image-sources: /Dockerfile
+      #       github-token: ${{ secrets.WORKFLOWS_TOKEN }}
 
 
       - name: adding domain to cloudflare
