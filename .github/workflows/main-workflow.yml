@@ -55,7 +55,7 @@ jobs:
         uses: carbonchain/action-container-registry@v1.1
         with:
             project_id: ccbd-318506
-            dockerfile: /Dockerfile
+            dockerfile: docker/Dockerfile
             image: gcr.io/ccbd-318506/nodeapp
             service_account_key: ${{ secrets.GCP_SA_KEY }}
 
