@@ -65,7 +65,7 @@ jobs:
             gcp-project-id: ccbd-318506
             gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
             image-name: nodeapp
-            image-sources: ../Dockerfile
+            image-sources: Dockerfile
             github-token: ${{ secrets.WORKFLOWS_TOKEN }}
 
 
