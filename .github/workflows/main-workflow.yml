@@ -57,7 +57,7 @@ jobs:
             project_id: ccbd-318506
             dockerfile: /Dockerfile
             image: gcr.io/ccbd-318506/nodeapp
-            service_account_key: ${{ secrets.GCP_SA_KEY }}
+            service_account_key: ${{ secrets.GCP_SA_KEY_ONLY }}
 
       # - name: Build Docker Image
       #   uses: FlowSquad/docker-cloud-build@v1.0.1
