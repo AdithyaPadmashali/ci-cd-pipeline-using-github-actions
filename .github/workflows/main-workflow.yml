@@ -1,63 +1,63 @@
 # This is a basic workflow to help you get started with Actions.
 
-name: CI
+# name: CI
 
-# Controls when the action will run
-on:
-  workflow_dispatch:
-  # Triggers the workflow on push or pull request events but only for the main branch.
-  push:
-    branches: [ post-esa ]
-  pull_request:
-    branches: [ post-esa ]
+# # Controls when the action will run
+# on:
+#   workflow_dispatch:
+#   # Triggers the workflow on push or pull request events but only for the main branch.
+#   push:
+#     branches: [ post-esa ]
+#   pull_request:
+#     branches: [ post-esa ]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      # Check-out your repository.
-      - name: Checkout
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Check-out your repository.
+#       - name: Checkout
+#         uses: actions/checkout@v2
 
 
-## ⬇ IMPORTANT PART ⬇ ###
+# ## ⬇ IMPORTANT PART ⬇ ###
 
-      - name: Read input-parameters.json
-        id: inputparams
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./input-parameters.json
+#       - name: Read input-parameters.json
+#         id: inputparams
+#         uses: juliangruber/read-file-action@v1
+#         with:
+#           path: ./input-parameters.json
           
-      - name: Echo input-parameters.json
-        run: echo "${{ steps.inputparams.output.content}}" 
+#       - name: Echo input-parameters.json
+#         run: echo "${{ steps.inputparams.output.content}}" 
         
-      - name: get Email from input
-        id: email
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'input-parameters.json'
-            prop_path: 'email'
-      - name: get app name from input
-        id: appName
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'input-parameters.json'
-            prop_path: 'app_name'
-      - name: get subdomain from input
-        id: subdomain
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-            path: 'input-parameters.json'
-            prop_path: 'subdomain_name'
+#       - name: get Email from input
+#         id: email
+#         uses: notiz-dev/github-action-json-property@release
+#         with: 
+#             path: 'input-parameters.json'
+#             prop_path: 'email'
+#       - name: get app name from input
+#         id: appName
+#         uses: notiz-dev/github-action-json-property@release
+#         with: 
+#             path: 'input-parameters.json'
+#             prop_path: 'app_name'
+#       - name: get subdomain from input
+#         id: subdomain
+#         uses: notiz-dev/github-action-json-property@release
+#         with: 
+#             path: 'input-parameters.json'
+#             prop_path: 'subdomain_name'
             
   
-      - name: Build and publish image to GCR
-        uses: carbonchain/action-container-registry@v1.1
-        with:
-            project_id: ccbd-318506
-            dockerfile: Dockerfile
-            image: gcr.io/ccbd-318506/nodeapp
-            service_account_key: ${{ secrets.GCP_SA_KEY_BASE64 }}
+      # - name: Build and publish image to GCR
+      #   uses: carbonchain/action-container-registry@v1.1
+      #   with:
+      #       project_id: ccbd-318506
+      #       dockerfile: Dockerfile
+      #       image: gcr.io/ccbd-318506/nodeapp
+      #       service_account_key: ${{ secrets.GCP_SA_KEY_BASE64 }}
 
       # - name: Build Docker Image
       #   uses: FlowSquad/docker-cloud-build@v1.0.1
@@ -68,7 +68,22 @@ jobs:
       #       image-sources: /Dockerfile
       #       github-token: ${{ secrets.WORKFLOWS_TOKEN }}
 
+name: Push to GCR GitHub Action
+on: [push]
+jobs:
+    build-and-push-to-gcr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: google-github-actions/setup-gcloud@master
+      - uses: RafikFarhad/push-to-gcr-github-action@v4
+        with:
+          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          registry: gcr.io
+          project_id: my-awesome-project
+          image_name: server-end
 
-      - name: adding domain to cloudflare
-        run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_AUTH_KEY_1 }}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"${{steps.subdomain.outputs.prop}}","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
+
+      # - name: adding domain to cloudflare
+      #   run: |
+      #     curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_AUTH_KEY_1 }}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"${{steps.subdomain.outputs.prop}}","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
