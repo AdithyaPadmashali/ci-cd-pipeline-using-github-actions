@@ -43,7 +43,7 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/ccbd-318506/nodeapp
+        docker build -t gcr.io/ccbd-318506/nodeapp .
         docker push gcr.io/ccbd-318506/nodeapp
         
     - name: Deploy to Cloud Run
