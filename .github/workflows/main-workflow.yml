@@ -71,7 +71,7 @@
 name: Push to GCR GitHub Action
 on: [push]
 jobs:
-    build-and-push-to-gcr:
+  build-and-push-to-gcr:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
