@@ -1,26 +1,26 @@
 # This is a basic workflow to help you get started with Actions.
 
-# name: CI
+name: CI
 
-# # Controls when the action will run
-# on:
-#   workflow_dispatch:
-#   # Triggers the workflow on push or pull request events but only for the main branch.
-#   push:
-#     branches: [ post-esa ]
-#   pull_request:
-#     branches: [ post-esa ]
+# Controls when the action will run
+on:
+  workflow_dispatch:
+  # Triggers the workflow on push or pull request events but only for the main branch.
+  push:
+    branches: [ post-esa ]
+  pull_request:
+    branches: [ post-esa ]
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       # Check-out your repository.
-#       - name: Checkout
-#         uses: actions/checkout@v2
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out your repository.
+      - name: Checkout
+        uses: actions/checkout@v2
 
 
-# ## ⬇ IMPORTANT PART ⬇ ###
+# # ## ⬇ IMPORTANT PART ⬇ ###
 
 #       - name: Read input-parameters.json
 #         id: inputparams
@@ -68,22 +68,27 @@
       #       image-sources: /Dockerfile
       #       github-token: ${{ secrets.WORKFLOWS_TOKEN }}
 
-name: Push to GCR GitHub Action
-on: [push]
-jobs:
-  build-and-push-to-gcr:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: google-github-actions/setup-gcloud@master
-      - uses: RafikFarhad/push-to-gcr-github-action@v4
-        with:
-          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
-          registry: gcr.io
-          project_id: ccbd-318506
-          image_name: nodeapp
+      # name: Push to GCR GitHub Action
+      # - uses: actions/checkout@v2
+      # - uses: google-github-actions/setup-gcloud@master
+      # - uses: RafikFarhad/push-to-gcr-github-action@v4
+      #   with:
+      #     gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+      #     registry: gcr.io
+      #     project_id: ccbd-318506
+      #     image_name: nodeapp
 
 
       # - name: adding domain to cloudflare
       #   run: |
       #     curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_AUTH_KEY_1 }}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"${{steps.subdomain.outputs.prop}}","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
+- name: Deploy to Cloud Run
+  id: deploy
+  uses: google-github-actions/deploy-cloudrun@main
+  with:
+    service: hello-cloud-run 
+    image: gcr.io/ccbd-318506/nodeapp
+    credentials: ${{ secrets.GCP_SA_KEY_BASE64 }}
+
+- name: Use Output
+  run: curl "${{ steps.deploy.outputs.url }}"
