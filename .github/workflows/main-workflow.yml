@@ -52,7 +52,7 @@ jobs:
       with:
         service: nodeapp
         image: gcr.io/ccbd-318506/nodeapp
-        region: ${{ env.REGION }}
+        region: asia-southeast1
 
     - name: Show Output
       run: echo ${{ steps.deploy.outputs.url }}
