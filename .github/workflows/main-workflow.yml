@@ -82,13 +82,13 @@ jobs:
       # - name: adding domain to cloudflare
       #   run: |
       #     curl -X POST "https://api.cloudflare.com/client/v4/zones/${{secrets.ZONE_ID}}/dns_records" -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_AUTH_KEY_1 }}" -H "Content-Type: application/json" --data '{"type":"CNAME","name":"${{steps.subdomain.outputs.prop}}","content":"ccbd-turbo.me","ttl":1,"proxied":true}' 
-- name: Deploy to Cloud Run
-  id: deploy
-  uses: google-github-actions/deploy-cloudrun@main
-  with:
-    service: hello-cloud-run 
-    image: gcr.io/ccbd-318506/nodeapp
-    credentials: ${{ secrets.GCP_SA_KEY_BASE64 }}
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: hello-cloud-run 
+          image: gcr.io/ccbd-318506/nodeapp
+          credentials: ${{ secrets.GCP_SA_KEY_BASE64 }}
 
-- name: Use Output
-  run: curl "${{ steps.deploy.outputs.url }}"
+      - name: Use Output
+        run: curl "${{ steps.deploy.outputs.url }}"
